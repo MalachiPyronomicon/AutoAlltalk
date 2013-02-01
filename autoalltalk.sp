@@ -8,6 +8,7 @@
 // * Changelog (date/version/description):
 // * 2013-01-19	-	0.1	-	initial release
 // * 2013-01-19	-	0.2	-	add debug msgs, seperate functions
+// * 2013-01-19	-	0.3	-	more debug msgs
 //	------------------------------------------------------------------------------------
 
 #pragma semicolon 1
@@ -16,8 +17,8 @@
 #include <mapchooser>
 //#include <nextmap>
 
-#define PLUGIN_VERSION	"0.2"
-#define DEFAULT_ENABLED	"1"
+#define PLUGIN_VERSION	"0.3"
+#define DEFAULT_ENABLED	"0"
 
 
 new Handle:g_hAllTalk = INVALID_HANDLE;
@@ -54,6 +55,7 @@ public OnPluginStart()
 	HookEvent("teamplay_round_stalemate", Hook_RoundStalemate);
 	HookEvent("teamplay_round_win", Hook_RoundWin); 
 	HookEvent("teamplay_round_active", Hook_RoundActive); 
+	HookEvent("teamplay_team_ready", Hook_TeamReady); 
 	 		
 }
 
@@ -78,6 +80,14 @@ public Hook_g_hAutoAlltalkEnable(Handle:cvar, const String:oldVal[], const Strin
 	{
 		SetConVarString(cvar, oldVal);
 	}
+}
+
+
+// Team Ready, turn alltalk xxx
+public Action:Hook_TeamReady(Handle:event, const String:name[], bool:dontBroadcast)
+{
+	PrintToServer("[autoalltalk.smx] Notify: Team Ready.");
+	return Plugin_Continue;
 }
 
 
